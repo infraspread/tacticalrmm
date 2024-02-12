@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-apt-get update
-apt-get install -y wget curl sudo ufw dirmngr gnupg lsb-release ca-certificates
-apt-get upgrade -y
+sudo apt-get update
+sudo apt-get install -y wget curl sudo ufw dirmngr gnupg lsb-release ca-certificates
+sudo apt-get upgrade -y
 
-useradd -m -G sudo -s /bin/bash tactical
-passwd tactical
+sudo useradd -m -G sudo -s /bin/bash tactical
+sudo passwd tactical
 
 echo "tactical ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow https
-ufw allow ssh
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow https
+sudo ufw allow ssh
 
 if [ $USER != "tactical" ]; then
     echo_orange "Do you want to su - tactical and continue? (y/n)"

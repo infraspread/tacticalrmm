@@ -13,7 +13,16 @@ ufw default allow outgoing
 ufw allow https
 ufw allow ssh
 
-su - tactical
+if [ $USER != "tactical" ]; then
+    echo_orange "Do you want to su - tactical and continue? (y/n)"
+    read SUTACTICAL
+    if [ $SUTACTICAL == "y" ]; then
+        su - tactical
+    else
+        exit
+    fi
+fi
+
 
 echo "wget https://raw.githubusercontent.com/infraspread/tacticalrmm/master/install.sh"
 echo "chmod +x install.sh"

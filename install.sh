@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
+apt-get update
+apt-get install -y wget curl sudo ufw dirmngr gnupg lsb-release ca-certificates
+apt-get upgrade -y
+
+useradd -m -G sudo -s /bin/bash tactical
+passwd tactical
+
+echo "tactical ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow https
+ufw allow ssh
+
+su - tactical
+
+echo "wget https://raw.githubusercontent.com/infraspread/tacticalrmm/master/install.sh"
+echo "chmod +x install.sh"
+echo "./install.sh"
 
 SCRIPT_VERSION="82"
 SCRIPT_URL="https://raw.githubusercontent.com/infraspread/tacticalrmm/master/install.sh"
 
-sudo apt install -y curl wget dirmngr gnupg lsb-release ca-certificates
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

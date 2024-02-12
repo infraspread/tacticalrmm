@@ -114,29 +114,12 @@ print_green() {
 }
 
 cls
-
-while [[ $rmmdomain != *[.]*[.]* ]]; do
-  echo -ne "${YELLOW}Enter the subdomain for the backend (e.g. api.example.com)${NC}: "
-  read rmmdomain
-done
-
-while [[ $frontenddomain != *[.]*[.]* ]]; do
-  echo -ne "${YELLOW}Enter the subdomain for the frontend (e.g. rmm.example.com)${NC}: "
-  read frontenddomain
-done
-
-while [[ $meshdomain != *[.]*[.]* ]]; do
-  echo -ne "${YELLOW}Enter the subdomain for meshcentral (e.g. mesh.example.com)${NC}: "
-  read meshdomain
-done
-
 echo -ne "${YELLOW}Enter the root domain (e.g. example.com or example.co.uk)${NC}: "
 read rootdomain
-
-while [[ $letsemail != *[@]*[.]* ]]; do
-  echo -ne "${YELLOW}Enter a valid email address for django and meshcentral${NC}: "
-  read letsemail
-done
+rmmdomain=api.$rootdomain
+frontenddomain=rmm.$rootdomain
+meshdomain=mesh.$rootdomain
+letsemail=tactical@$rootdomain
 
 if grep -q manage_etc_hosts /etc/hosts; then
   sudo sed -i '/manage_etc_hosts: true/d' /etc/cloud/cloud.cfg >/dev/null
@@ -162,7 +145,7 @@ if echo "$IPV4" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192
   BEHIND_NAT=true
 fi
 
-insecure=false
+insecure=true
 if [[ $* == *--insecure* ]]; then
   insecure=true
 fi
